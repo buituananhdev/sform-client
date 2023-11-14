@@ -9,10 +9,6 @@ const route = useRoute();
 
 const dataFormView = ref<IForm>({
     id: "1",
-    owner: {
-        name: "Nguyễn Văn A",
-        email: "",
-    },
     questions: [],
     description: "",
     title: "",
@@ -31,7 +27,6 @@ onMounted(async () => {
 
 <template>
     <div class="container">
-        <h1>ádasd</h1>
         <FormView :data="dataFormView" />
     </div>
 </template>
