@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import NavBar from '@/layouts/NavBar/index.vue'
-import UserList from '@/views/dashboard/UserList/index.vue'
+import NavBar from "@/layouts/NavBar/index.vue"
+import UserList from "@/views/dashboard/UserList/index.vue"
 </script>
 <template>
     <div class="container-dasboard">
-        <NavBar/>
+        <NavBar />
         <div class="container-list-user">
-            
-            <UserList/>
+            <UserList />
         </div>
     </div>
 </template>
@@ -18,12 +17,9 @@ import UserList from '@/views/dashboard/UserList/index.vue'
     background: white;
     display: flex;
     overflow-x: hidden;
-    
 }
 
 .container-list-user {
     margin-left: 50px;
 }
-
-
 </style>

@@ -22,7 +22,7 @@
                     </table>
                 </div>
                 <div v-for="form in filteredUsers" :key="form.id">
-                    <UserCard :form="form" />
+                    <UserCard :form="form" @goToSubmit="goToSubmit(form.id)" />
                 </div>
             </div>
         </div>
@@ -36,11 +36,8 @@ import { getAllFormApi } from "@/services/form.service"
 import { ElNotification } from "element-plus"
 import type { IForm } from "@/types/form"
 
-
-
-
 const router = useRouter()
-const tableColumns = ref(["Title", "Description","Question","CreateAt","UpdateAt"])
+const tableColumns = ref(["Title", "Description", "Question", "CreateAt", "UpdateAt"])
 const listForm = ref<Array<IForm>>([])
 
 const getListForm = async (): Promise<void> => {
@@ -53,10 +50,13 @@ const getListForm = async (): Promise<void> => {
         })
         listForm.value = res.data
         console.log(listForm.value)
-    } catch(error) {
+    } catch (error) {
         console.log("error", error)
-
     }
+}
+
+const goToSubmit: (id: string) => void = (id) => {
+    router.push(`/forms/${id}/detail`)
 }
 onBeforeMount(() => {
     getListForm()
@@ -66,11 +66,9 @@ const keySearch = ref<string>("")
 
 const filteredUsers = computed(() => {
     return listForm.value.filter(
-        (form) =>
-            form.title.toLowerCase().includes(keySearch.value.toLowerCase()) ||
-            form.description.toLowerCase().includes(keySearch.value.toLowerCase())
-            // form.updatedAt.toLowerCase().includes(keySearch.value.toLowerCase()) ||
-            // form.createdAt.toLowerCase().includes(keySearch.value.toLowerCase())
+        (form) => form.title.toLowerCase().includes(keySearch.value.toLowerCase()) || form.description.toLowerCase().includes(keySearch.value.toLowerCase())
+        // form.updatedAt.toLowerCase().includes(keySearch.value.toLowerCase()) ||
+        // form.createdAt.toLowerCase().includes(keySearch.value.toLowerCase())
     )
 })
 
@@ -100,7 +98,7 @@ const CreateForm = () => {
     display: grid;
     grid-template-columns: 50px 400px 110px 180px 150px;
     align-items: center;
-    background-color: #F2F3F4;
+    background-color: #f2f3f4;
     padding: 15px;
     border-radius: 16px;
 }

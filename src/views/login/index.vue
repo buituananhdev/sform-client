@@ -26,7 +26,9 @@ const submit = async () => {
             localStorage.setItem("refresh_token", data.refreshToken)
         })
         await initAuthStore()
-        // router.push("/")
+        console.log("hee")
+
+        router.push("/dashboard")
     } catch (error) {
         console.log(error)
     }

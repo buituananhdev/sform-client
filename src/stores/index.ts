@@ -9,6 +9,6 @@ export const initAuthStore = async () => {
             user: data,
             isLoggedIn: true,
         })
-        console.log("initAuthStore", authStore)
+        console.log("initAuthStore", authStore.getIsLoggedIn())
     }
 }

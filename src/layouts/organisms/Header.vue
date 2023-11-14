@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue"
+import { onMounted, ref, watch } from "vue"
 import { useRouter } from "vue-router"
 import { useAuthStore } from "@/stores/auth"
 import { logoutApi } from "@/services/user.service"
@@ -15,34 +15,38 @@ const goToRegister: () => void = () => {
     router.push("/register")
 }
 
-const isLogin = ref<boolean>(false)
+const isLogin = ref<boolean | undefined>(false)
 
 const logout: () => Promise<void> = async () => {
     try {
         await logoutApi()
         localStorage.removeItem("access_token")
+        authStore.setAuthStore({
+            user: {
+                email: "",
+                password: "",
+            },
+            isLoggedIn: false,
+        })
         router.push("/login")
     } catch (error) {
         console.error(error)
     }
 }
-
-onMounted(() => {
-    isLogin.value = !!localStorage.getItem("access_token")
-})
+// isLogin.value = authStore.getIsLoggedIn()
 </script>
 
 <template>
     <div class="nav-container">
         <div class="nav-container__body">
             <p class="nav-container__body__logo">S-FORM</p>
-            <div class="nav-container__body__action" v-if="!isLogin">
+            <div class="nav-container__body__action" v-if="!authStore.getIsLoggedIn()">
                 <el-button type="primary" @click="goToLogin">Login</el-button>
                 <el-button type="primary" @click="goToRegister" plain>Register</el-button>
             </div>
             <div class="nav-container__body__info" v-else>
                 <el-icon><Avatar /></el-icon> |
-                <p>{{ authStore.getUserName }}</p>
+                <p>{{ authStore.getUserName() }}</p>
                 <el-icon class="nav-container__body__info__icon-right" @click="logout"><Right /></el-icon>
             </div>
         </div>

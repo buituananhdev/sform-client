@@ -3,3 +3,7 @@ export interface IUser {
     password: string
     email: string
 }
+export interface IAuthState {
+    user: IUser
+    isLoggedIn?: boolean
+}
